@@ -1,0 +1,41 @@
+body {
+    height: 100vh;
+}
+
+.logo, .login {
+    display: inline-block;
+}
+
+.login {
+    float: right;
+}
+
+main {
+    width: 100%;
+    background-image: url('img/food-2068217_1920.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+}
+
+.week {
+    width: 30%;
+    background: #6e9d36;
+    margin: 100px 0 0 100px;
+    position: absolute;
+    padding: 80px 100px 100px 100px;
+    -webkit-box-shadow: 8px 7px 12px -1px rgba(0,0,0,0.6);
+    -moz-box-shadow: 8px 7px 12px -1px rgba(0,0,0,0.6);
+    box-shadow: 8px 7px 12px -1px rgba(0,0,0,0.6);
+
+}
+
+.week ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+footer ul {
+    list-style-type: none;
+}
