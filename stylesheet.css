@@ -40,6 +40,20 @@ main {
     color: white; 
 }
 
+.formular {
+    width: 30%;
+    background: #6e9d36;
+    position: absolute;
+    padding: 50px 220px 80px 220px;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: 250px;
+    color: white; 
+}
+
+
 .week ul {
     list-style-type: none;
     margin: 0;
