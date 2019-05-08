@@ -19,7 +19,7 @@ let sql = `SELECT * FROM vorschlaege`;
 db.all(sql, (error,rows) => {
     if (error){
         if (rows == null){
-            db.run(`CREATE TABLE vorschlaege (gericht TEXT NOT NULL)`,(error)=>{
+            db.run(`CREATE TABLE vorschlaege (gericht TEXT NOT NULL, ranking INTEGER)`,(error)=>{
                 if(error){
                     console.log(error.message);
                 } else {
@@ -60,3 +60,16 @@ app.use(express.static(__dirname + '/'));
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:true}));
 
+app.post("/eingabe", function(req, res){
+    const username = req.body.username;
+    const passwort = req.body.passwort;
+    if(db.get(`SELECT name FROM mitarbeiter WHERE user = '${username}'`) == username){
+        if(db.get(`SELECT passwort FROM mitarbeiter WHERE user = '${username}'`) == passwort){
+            res.render('administration')
+        } else {
+            res.render('login')
+        }           
+    } else {
+        res.render('login')
+    }
+});
