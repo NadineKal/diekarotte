@@ -2,6 +2,14 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+a {
+    color: black;
+}
+a:hover {
+    text-decoration: underline;
+    color: black;
+}
+
 .cards {
     margin-top: 150px;
 }
@@ -32,13 +40,15 @@ body {
     text-transform: uppercase;
 }
 
+footer {
+    margin-top: 200px;
+}
+
 footer ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    bottom: 20px;
-    position: absolute;
-    right: 30px;
+    float: right;
 }
 
 footer ul li {
