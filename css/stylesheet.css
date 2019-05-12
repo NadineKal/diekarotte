@@ -2,10 +2,18 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 .cards {
     margin-top: 150px;
 }
 
+.cards-link:hover {
+    background: #e46713;
+    transition: 0.9s;
+}
 .card-plan {
     border: none;
     border-radius: 0;
@@ -32,15 +40,55 @@ body {
     text-transform: uppercase;
 }
 
+.card-txt a {
+    color: white;
+}
+
+.card-txt a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
 footer ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    bottom: 20px;
-    position: absolute;
-    right: 30px;
 }
 
 footer ul li {
     display: inline-block;
+}
+
+.brand-left {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+}
+
+.login-right {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+}
+
+
+
+/* Pläne */
+
+.left-h {
+    background: green;
+    height: 100vh;
+}
+
+.right-h {
+    background: pink;
+    height: 100vh;
 }
