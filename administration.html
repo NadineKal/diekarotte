@@ -1,28 +1,65 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Administration</title>
-        <link rel="stylesheet" href="/stylesheet.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+        <link href="css/stylesheet.css" rel="stylesheet">
+        <title>Mensaplan</title>
     </head>
     <body>
-        <div>
-             <form action="gerichte" method="POST">
-                    <select name="Tagauswahl">
-                        <option value="montag">Montag</option>
-                        <option value="dienstag">Dienstag</option>
-                        <option value="mittwoch">Mittwoch</option>
-                        <option value="donnerstag">Donnerstag</option>
-                        <option value="freitag">Freitag</option>
-                    </select>
-                    <input type="text" name="gericht" placeholder="Gericht"> <br>
-                    <input type="text" name="preis" placeholder="Preis"><br>
-                    <select name="Eigenschaft">
-                        <option value="vegan">Vegan</option>
-                        <option value="vegetarisch">Vegetarisch</option>
-                        <option value="fleisch">mit Fleisch</option>
-                        <option value="fisch">mit Fisch</option>
-                    </select>
-                    <button type="submit">absenden</button>
+        <header>
+                <a class="brand-left" href="/">
+                    <img src="img/logo.png" width="30" height="30" alt="Die Karotte">
+                </a>
+                <a class="login-right">
+                    <img src="img/login.jpg" width="30" height="30" alt="Login-Button">
+                </a>
+            </header>
+        <main>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6 left-h">
+                        <div class="col-lg-10 mx-auto">
+                            <form action="gerichte" method="POST">
+                                <select name="Tagauswahl">
+                                    <option value="montag">Montag</option>
+                                    <option value="dienstag">Dienstag</option>
+                                    <option value="mittwoch">Mittwoch</option>
+                                    <option value="donnerstag">Donnerstag</option>
+                                    <option value="freitag">Freitag</option>
+                                </select>
+                                <input type="text" name="gericht" placeholder="Gericht"> <br>
+                                <input type="text" name="preis" placeholder="Preis"><br>
+                                <select name="Eigenschaft">
+                                    <option value="vegan">Vegan</option>
+                                    <option value="vegetarisch">Vegetarisch</option>
+                                    <option value="fleisch">mit Fleisch</option>
+                                    <option value="fisch">mit Fisch</option>
+                                </select>
+                                <button type="submit">absenden</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 right-h p-0">
+                        <div class="right-side"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
         </div>
+        <footer>
+            <ul>
+                <li><a href="#">Impressum</a></li>
+                <li><a href="#">Datenschutz</a></li>
+            </ul>
+        </footer>
+        <div class="container"></div>
+
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
     </body>
 </html>

@@ -84,11 +84,23 @@ footer ul li {
 /* Pläne */
 
 .left-h {
-    background: green;
+    background: lightyellow;
     height: 100vh;
 }
 
 .right-h {
-    background: pink;
     height: 100vh;
+}
+
+.right-side {
+    background-image: url('../img/food-1050813_1920.jpg');
+    background-size: cover;
+    background-repeat: none;
+    height: 100vh;
+    width: auto;
+}
+
+.space {
+    margin-top: 50%;
+    transform: translateY(-50%);
 }
