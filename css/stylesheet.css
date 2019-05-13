@@ -101,6 +101,5 @@ footer ul li {
 }
 
 .space {
-    margin-top: 50%;
-    transform: translateY(-50%);
+    margin-top: 25%;
 }
