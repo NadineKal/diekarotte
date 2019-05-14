@@ -45,6 +45,21 @@ db.all(sql, (error,rows) => {
     }
 });
 
+sql = `SELECT * FROM gerichte`;
+db.all(sql, (error,rows) => {
+    if (error){
+        if (rows == null){
+            db.run(`CREATE TABLE gerichte (tag TEXT NOT NULL, gericht TEXT NOT NULL, preis TEXT NOT NULL, eigenschaft TEXT NOT NULL)`,(error)=>{
+                if(error){
+                    console.log(error.message);
+                } else {
+                    console.log('Initialized table gerichte');
+                }
+            });
+        }
+    }
+});
+
 app.engine('.ejs', require('ejs').__express);
 app.set('view engine', 'ejs');
 
@@ -87,6 +102,34 @@ app.post("/vorschlagSenden", function(req, res){
     res.render('vorschlag');
 });
 
+app.post("/gerichte", function(req, res){
+    const tag = req.body.tagauswahl;
+    const gericht1 = req.body.gericht1; const preis1 = req.body.preis1; const eig1 = req.body.eigenschaft1;
+    const gericht2 = req.body.gericht2; const preis2 = req.body.preis2; const eig2 = req.body.eigenschaft2;
+    const gericht3 = req.body.gericht3; const preis3 = req.body.preis3; const eig3 = req.body.eigenschaft3;
+    if(tag == "montag"){
+        const del = `delete from gerichte where tag = 'Montag'`
+        const sql1 = `insert into gerichte (tag, gericht, preis, eigenschaft) values ("Montag", '${gericht1}', '${preis1}', '${eig1}')`;
+        const sql2 = `insert into gerichte (tag, gericht, preis, eigenschaft) values ("Montag", '${gericht2}', '${preis2}', '${eig2}')`;
+        const sql3 = `insert into gerichte (tag, gericht, preis, eigenschaft) values ("Montag", '${gericht3}', '${preis3}', '${eig3}')`;
+        db.run(del);
+        db.run(sql1); db.run(sql2); db.run(sql3);
+    }
+    if(tag == "dienstag"){
+        console.log(2);
+    }
+    if(tag == "mittwoch"){
+        console.log(3);
+    }
+    if(tag == "donnerstag"){
+        console.log(4);
+    }
+    if(tag == "freitag"){
+        console.log(5);
+    }
+    res.render('plaene');
+});
+
 app.get("/plaene", function(req, res){
     res.render('plaene');
 });
@@ -101,4 +144,8 @@ app.get("/vorschlage", function(req, res){
 
 app.get("/login", function(req, res){
     res.render('login', {message: "Melden Sie sich hier mit ihrem Namen und Ihrem Passwort an!"});
+});
+
+app.get("/administration", function(req, res){
+    res.render('administration');
 });
