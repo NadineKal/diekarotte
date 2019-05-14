@@ -1,15 +1,65 @@
 <!DOCTYPE html>
-<html>  
+<html>
     <head>
-        <title>Vorschlag</title>
-        <link rel="stylesheet" href="/stylesheet.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+        <link href="css/stylesheet.css" rel="stylesheet">
+        <title>Mensaplan</title>
     </head>
-    <body> 
-        <div> 
-            <form action="vorschlagSenden" method="POST">
-                <input type="text" name="vorschlag" placeholder="Gericht"> <br>
-                <button type="submit">absenden</button>
-            </form>
+    <body>
+        <header>
+            <div class="nav-absolute">
+                <a class="brand-left" href="/">
+                    <img src="img/logo.png" width="50" height="50" alt="Die Karotte">
+                </a>
+                <ul>
+                    <li><a href="#">Pläne</a></li>
+                    <li><a href="#">Vorschlag</a></li>
+                    <li><a href="#">Ranking</a></li>
+                </ul>
+            </div>
+                <a class="login-right">
+                    <img src="img/login.jpg" width="50" height="50" alt="Login-Button">
+                </a>
+        </header>
+        <main>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6 left-h">
+                        <div class="col-lg-10 mx-auto">
+                            <div class="space">
+                                <form action="vorschlagSenden" method="POST">
+                                    <div class="form-group row">
+                                        <label for="vorschlag">Lieblingsessen - Wünsch dir was!</label>
+                                        <textarea name="vorschlag" class="form-control from-group-item" rows="3" placeholder="Kartoffelpüree mit Schwarzwurzeln und Bratwurst"></textarea>
+                                    </div>
+                                    <div class="from-group row">
+                                        <button type="submit" class="btn btn-primary">absenden</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 right-h p-0">
+                        <div class="right-side"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
         </div>
+        <footer>
+            <ul>
+                <li><a href="#">Impressum</a></li>
+                <li><a href="#">Datenschutz</a></li>
+            </ul>
+        </footer>
+        <div class="container"></div>
+
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
     </body>
 </html>

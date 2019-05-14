@@ -55,17 +55,35 @@ footer {
     right: 0;
 }
 
-footer ul {
+footer ul, .nav-absolute ul {
     list-style: none;
     padding: 0;
     margin: 0;
-}
-
-footer ul li {
     display: inline-block;
 }
 
+footer ul li, .nav-absolute ul li {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.nav-absolute ul li a {
+    color: black;
+}
+
+footer ul li a {
+    color: white;
+}
+
+footer ul li a:hover, .nav-absolute ul li a:hover {
+    color: orange;
+}
+
 .brand-left {
+    padding-right: 20px;
+}
+
+.nav-absolute {
     position: absolute;
     top: 10px;
     left: 10px;
@@ -85,7 +103,7 @@ footer ul li {
 
 .left-h {
     background: lightyellow;
-    height: 100vh;
+    height: 100%;
 }
 
 .right-h {
@@ -103,3 +121,29 @@ footer ul li {
 .space {
     margin-top: 25%;
 }
+
+
+@media (min-width: 992px) { 
+    .left-h {
+        height: 100vh;
+    }
+ }
+
+
+
+
+
+ /*Bootstrap*/
+
+.list-group-item:first-child, .list-group-item:last-child {
+    border-radius: 0;
+}
+
+.list-group a {
+    color: black;
+}
+
+ .list-group a:hover {
+     background: orange;
+     color: white;
+ }
