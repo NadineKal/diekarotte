@@ -55,17 +55,35 @@ footer {
     right: 0;
 }
 
-footer ul {
+footer ul, .nav-absolute ul {
     list-style: none;
     padding: 0;
     margin: 0;
-}
-
-footer ul li {
     display: inline-block;
 }
 
+footer ul li, .nav-absolute ul li {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.nav-absolute ul li a {
+    color: black;
+}
+
+footer ul li a {
+    color: white;
+}
+
+footer ul li a:hover, .nav-absolute ul li a:hover {
+    color: orange;
+}
+
 .brand-left {
+    padding-right: 20px;
+}
+
+.nav-absolute {
     position: absolute;
     top: 10px;
     left: 10px;
@@ -84,11 +102,48 @@ footer ul li {
 /* Pläne */
 
 .left-h {
-    background: green;
-    height: 100vh;
+    background: lightyellow;
+    height: 100%;
 }
 
 .right-h {
-    background: pink;
     height: 100vh;
 }
+
+.right-side {
+    background-image: url('../img/food-1050813_1920.jpg');
+    background-size: cover;
+    background-repeat: none;
+    height: 100vh;
+    width: auto;
+}
+
+.space {
+    margin-top: 25%;
+}
+
+
+@media (min-width: 992px) { 
+    .left-h {
+        height: 100vh;
+    }
+ }
+
+
+
+
+
+ /*Bootstrap*/
+
+.list-group-item:first-child, .list-group-item:last-child {
+    border-radius: 0;
+}
+
+.list-group a {
+    color: black;
+}
+
+ .list-group a:hover {
+     background: orange;
+     color: white;
+ }
