@@ -19,7 +19,7 @@ let sql = `SELECT * FROM vorschlaege`;
 db.all(sql, (error,rows) => {
     if (error){
         if (rows == null){
-            db.run(`CREATE TABLE vorschlaege (gericht TEXT NOT NULL, ranking INTEGER)`,(error)=>{
+            db.run(`CREATE TABLE vorschlaege (gericht TEXT NOT NULL, ranking INTEGER DEFAULT 0)`,(error)=>{
                 if(error){
                     console.log(error.message);
                 } else {
@@ -56,20 +56,49 @@ app.listen(port, function() {
 // HTML-Dateien im Ordner public "sichtbar" machen
 app.use(express.static(__dirname + '/'));
 
+app.get("/", function(req, res){
+    res.render('index');
+});
+
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:true}));
 
+// Funktioniert so noch nicht, weil alle db-Funktionen keinen String sondern etwas Anderes ausgeben
 app.post("/eingabe", function(req, res){
-    const username = req.body.username;
+    const name = req.body.name;
     const passwort = req.body.passwort;
-    if(db.get(`SELECT name FROM mitarbeiter WHERE user = '${username}'`) == username){
-        if(db.get(`SELECT passwort FROM mitarbeiter WHERE user = '${username}'`) == passwort){
-            res.render('administration')
+    console.log(name);
+    if(db.get(`SELECT name FROM mitarbeiter WHERE name = '${name}'`) == name){
+        if(db.get(`SELECT passwort FROM mitarbeiter WHERE name = '${name}'`) == passwort){
+            res.render('administration');
         } else {
-            res.render('login')
+            res.render('login', {message: "Name und Passwort stimmen nicht überein!"});
         }           
     } else {
-        res.render('login')
+        res.render('login', {message: "Name unbekannt!"});
     }
+});
+
+app.post("/vorschlagSenden", function(req, res){
+    const vorschlag = req.body.vorschlag;
+    const sql = `insert into vorschlaege (gericht) values('${vorschlag}')`;
+    db.run(sql);
+    res.render('vorschlag');
+});
+
+app.get("/plaene", function(req, res){
+    res.render('plaene');
+});
+
+app.get("/ranking", function(req, res){
+    res.render('ranking');
+});
+
+app.get("/vorschlage", function(req, res){
+    res.render('vorschlag');
+});
+
+app.get("/login", function(req, res){
+    res.render('login', {message: "Melden Sie sich hier mit ihrem Namen und Ihrem Passwort an!"});
 });
