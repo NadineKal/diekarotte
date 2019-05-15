@@ -177,19 +177,29 @@ app.get("/wochenuebersicht", function(req, res){
     });
 });
 app.get("/montag", function(req, res){
-    res.render('montag');
+    db.all(`SELECT gericht,preis FROM gerichte where tag = "Montag"`, (err,rows)=>{
+        res.render('montag', {"mon": rows});
+    }); 
 });
 app.get("/dienstag", function(req, res){
-    res.render('dienstag');
+    db.all(`SELECT gericht,preis FROM gerichte where tag = "Dienstag"`, (err,rows)=>{
+        res.render('dienstag', {"die": rows});
+    });
 });
 app.get("/mittwoch", function(req, res){
-    res.render('mittwoch');
+    db.all(`SELECT gericht,preis FROM gerichte where tag = "Mittwoch"`, (err,rows)=>{
+        res.render('mittwoch', {"mit": rows});
+    });
 });
 app.get("/donnerstag", function(req, res){
-    res.render('donnerstag');
+    db.all(`SELECT gericht,preis FROM gerichte where tag = "Donnerstag"`, (err,rows)=>{
+        res.render('donnerstag', {"don": rows});
+    });
 });
 app.get("/freitag", function(req, res){
-    res.render('freitag');
+    db.all(`SELECT gericht,preis FROM gerichte where tag = "Freitag"`, (err,rows)=>{
+        res.render('freitag', {"fre": rows});
+    });
 });
 app.get("/impressum", function(req, res){
     res.render('impressum');
