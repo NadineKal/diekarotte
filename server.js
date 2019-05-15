@@ -116,16 +116,36 @@ app.post("/gerichte", function(req, res){
         db.run(sql1); db.run(sql2); db.run(sql3);
     }
     if(tag == "dienstag"){
-        console.log(2);
+        const del = `delete from gerichte where tag = 'Dienstag'`
+        const sql1 = `insert into gerichte (tag, gericht, preis, eigenschaft) values ("Dienstag", '${gericht1}', '${preis1}', '${eig1}')`;
+        const sql2 = `insert into gerichte (tag, gericht, preis, eigenschaft) values ("Dienstag", '${gericht2}', '${preis2}', '${eig2}')`;
+        const sql3 = `insert into gerichte (tag, gericht, preis, eigenschaft) values ("Dienstag", '${gericht3}', '${preis3}', '${eig3}')`;
+        db.run(del);
+        db.run(sql1); db.run(sql2); db.run(sql3);
     }
     if(tag == "mittwoch"){
-        console.log(3);
+        const del = `delete from gerichte where tag = 'Mittwoch'`
+        const sql1 = `insert into gerichte (tag, gericht, preis, eigenschaft) values ("Mittwoch", '${gericht1}', '${preis1}', '${eig1}')`;
+        const sql2 = `insert into gerichte (tag, gericht, preis, eigenschaft) values ("Mittwoch", '${gericht2}', '${preis2}', '${eig2}')`;
+        const sql3 = `insert into gerichte (tag, gericht, preis, eigenschaft) values ("Mittwoch", '${gericht3}', '${preis3}', '${eig3}')`;
+        db.run(del);
+        db.run(sql1); db.run(sql2); db.run(sql3);
     }
     if(tag == "donnerstag"){
-        console.log(4);
+        const del = `delete from gerichte where tag = 'Donnerstag'`
+        const sql1 = `insert into gerichte (tag, gericht, preis, eigenschaft) values ("Donnerstag", '${gericht1}', '${preis1}', '${eig1}')`;
+        const sql2 = `insert into gerichte (tag, gericht, preis, eigenschaft) values ("Donnerstag", '${gericht2}', '${preis2}', '${eig2}')`;
+        const sql3 = `insert into gerichte (tag, gericht, preis, eigenschaft) values ("Donnerstag", '${gericht3}', '${preis3}', '${eig3}')`;
+        db.run(del);
+        db.run(sql1); db.run(sql2); db.run(sql3);
     }
     if(tag == "freitag"){
-        console.log(5);
+        const del = `delete from gerichte where tag = 'Freitag'`
+        const sql1 = `insert into gerichte (tag, gericht, preis, eigenschaft) values ("Freitag", '${gericht1}', '${preis1}', '${eig1}')`;
+        const sql2 = `insert into gerichte (tag, gericht, preis, eigenschaft) values ("Freitag", '${gericht2}', '${preis2}', '${eig2}')`;
+        const sql3 = `insert into gerichte (tag, gericht, preis, eigenschaft) values ("Freitag", '${gericht3}', '${preis3}', '${eig3}')`;
+        db.run(del);
+        db.run(sql1); db.run(sql2); db.run(sql3);
     }
     res.render('plaene');
 });
