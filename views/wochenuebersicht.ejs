@@ -44,21 +44,47 @@
                                     <tbody>
                                       <tr>
                                         <th scope="row">Montag</th>
+                                        <% for(var i=0;i<all.length;i++){%>
+                                          <% if(all[i].tag==="Montag"){%>
+                                            <th scope="row"><%= all[i].gericht%></th>
+                                          <% }%>
+                                        <% }%>
                                       </tr>
                                       <tr>
                                         <th scope="row">Dienstag</th>
+                                        <% for(var i=0;i<all.length;i++){%>
+                                          <% if(all[i].tag==="Dienstag"){%>
+                                            <th scope="row"><%= all[i].gericht%></th>
+                                          <% }%>
+                                        <% }%>
                                       </tr>
                                       <tr>
                                         <th scope="row">Mittwoch</th>
+                                        <% for(var i=0;i<all.length;i++){%>
+                                          <% if(all[i].tag==="Mittwoch"){%>
+                                            <th scope="row"><%= all[i].gericht%></th>
+                                          <% }%>
+                                        <% }%>
                                       </tr>
                                       <tr>
                                         <th scope="row">Donnerstag</th>
+                                        <% for(var i=0;i<all.length;i++){%>
+                                          <% if(all[i].tag==="Donnerstag"){%>
+                                            <th scope="row"><%= all[i].gericht%></th>
+                                          <% }%>
+                                        <% }%>
                                       </tr>
                                       <tr>
                                         <th scope="row">Freitag</th>
+                                        <% for(var i=0;i<all.length;i++){%>
+                                          <% if(all[i].tag==="Freitag"){%>
+                                            <th scope="row"><%= all[i].gericht%></th>
+                                          <% }%>
+                                        <% }%>
                                       </tr>
                                     </tbody>
                                   </table>
+                                  <a href="/plaene" class="btn btn-primary float-right" title="Pläne">zurück</a>
                             </div>
                         </div>
                     </div>

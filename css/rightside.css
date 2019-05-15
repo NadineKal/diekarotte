@@ -13,3 +13,19 @@
     height: 100vh;
     width: auto;
 }
+
+.right-side-ranking {
+    background-image: url('../img/food-1898194_1920.jpg');
+    background-size: cover;
+    background-repeat: none;
+    height: 100vh;
+    width: auto;
+}
+
+.right-side-vorschlag {
+    background-image: url('../img/pasta-794464_1920.jpg');
+    background-size: cover;
+    background-repeat: none;
+    height: 100vh;
+    width: auto;
+}
