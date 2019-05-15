@@ -172,8 +172,7 @@ app.get("/administration", function(req, res){
 });
 
 app.get("/wochenuebersicht", function(req, res){
-    db.all(`SELECT tag,gericht FROM gerichte`,(err,rows)=>{
-        
+    db.all(`SELECT tag,gericht,preis FROM gerichte`,(err,rows)=>{ 
         res.render('wochenuebersicht', {"all":rows});
     });
 });
