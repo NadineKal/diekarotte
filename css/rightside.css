@@ -1,0 +1,15 @@
+.right-side {
+    background-image: url('../img/food-1050813_1920.jpg');
+    background-size: cover;
+    background-repeat: none;
+    height: 100vh;
+    width: auto;
+}
+
+.right-side-admin {
+    background-image: url('../img/plan-2372176_1920.jpg');
+    background-size: cover;
+    background-repeat: none;
+    height: 100vh;
+    width: auto;
+}
