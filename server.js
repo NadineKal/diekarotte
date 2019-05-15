@@ -84,15 +84,16 @@ app.post("/eingabe", function(req, res){
     const name = req.body.name;
     const passwort = req.body.passwort;
     console.log(name);
-    if(db.get(`SELECT name FROM mitarbeiter WHERE name = '${name}'`) == name){
-        if(db.get(`SELECT passwort FROM mitarbeiter WHERE name = '${name}'`) == passwort){
+    db.get(`SELECT * FROM mitarbeiter WHERE name = '${name}'`,(err,row)=>{
+        if(row == null){
+            res.render('login', {message: "Name unbekannt!"});
+        }
+        if(row.passwort == passwort){
             res.render('administration');
         } else {
             res.render('login', {message: "Name und Passwort stimmen nicht überein!"});
-        }           
-    } else {
-        res.render('login', {message: "Name unbekannt!"});
-    }
+        }
+    });
 });
 
 app.post("/vorschlagSenden", function(req, res){
@@ -168,4 +169,23 @@ app.get("/login", function(req, res){
 
 app.get("/administration", function(req, res){
     res.render('administration');
+});
+
+app.get("/wochenuebersicht", function(req, res){
+    res.render('wochenuebersicht');
+});
+app.get("/montag", function(req, res){
+    res.render('montag');
+});
+app.get("/dienstag", function(req, res){
+    res.render('dienstag');
+});
+app.get("/mittwoch", function(req, res){
+    res.render('mittwoch');
+});
+app.get("/donnerstag", function(req, res){
+    res.render('donnerstag');
+});
+app.get("/freitag", function(req, res){
+    res.render('freitag');
 });
