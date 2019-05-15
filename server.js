@@ -189,3 +189,9 @@ app.get("/donnerstag", function(req, res){
 app.get("/freitag", function(req, res){
     res.render('freitag');
 });
+app.get("/impressum", function(req, res){
+    res.render('impressum');
+});
+app.get("/datenschutz", function(req, res){
+    res.render('datenschutz');
+});
