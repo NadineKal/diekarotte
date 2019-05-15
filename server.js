@@ -172,7 +172,10 @@ app.get("/administration", function(req, res){
 });
 
 app.get("/wochenuebersicht", function(req, res){
-    res.render('wochenuebersicht');
+    db.all(`SELECT tag,gericht FROM gerichte`,(err,rows)=>{
+        
+        res.render('wochenuebersicht', {"all":rows});
+    });
 });
 app.get("/montag", function(req, res){
     res.render('montag');
