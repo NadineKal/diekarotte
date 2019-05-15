@@ -19,7 +19,7 @@ let sql = `SELECT * FROM vorschlaege`;
 db.all(sql, (error,rows) => {
     if (error){
         if (rows == null){
-            db.run(`CREATE TABLE vorschlaege (gericht TEXT NOT NULL, ranking INTEGER DEFAULT 0)`,(error)=>{
+            db.run(`CREATE TABLE vorschlaege (gid INTEGER AUTOINCREMENT, gericht TEXT NOT NULL, ranking INTEGER DEFAULT 0)`,(error)=>{
                 if(error){
                     console.log(error.message);
                 } else {
@@ -54,6 +54,36 @@ db.all(sql, (error,rows) => {
                     console.log(error.message);
                 } else {
                     console.log('Initialized table gerichte');
+                }
+            });
+        }
+    }
+});
+
+sql = `SELECT * FROM studis`;
+db.all(sql, (error,rows) => {
+    if (error){
+        if (rows == null){
+            db.run(`CREATE TABLE studis (uid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, passwort TEXT NOT NULL)`,(error)=>{
+                if(error){
+                    console.log(error.message);
+                } else {
+                    console.log('Initialized table studis');
+                }
+            });
+        }
+    }
+});
+
+sql = `SELECT * FROM ranking`;
+db.all(sql, (error,rows) => {
+    if (error){
+        if (rows == null){
+            db.run(`CREATE TABLE ranking (uid INTEGER, gid INTEGER, FOREIGN KEY (uid) REFERENCES studis(uid), FOREIGN KEY (gid) REFERENCES vorschlage(gid))`,(error)=>{
+                if(error){
+                    console.log(error.message);
+                } else {
+                    console.log('Initialized table ranking');
                 }
             });
         }
