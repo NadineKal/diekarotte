@@ -110,14 +110,6 @@ footer ul li a:hover, .nav-absolute ul li a:hover {
     height: 100vh;
 }
 
-.right-side {
-    background-image: url('../img/food-1050813_1920.jpg');
-    background-size: cover;
-    background-repeat: none;
-    height: 100vh;
-    width: auto;
-}
-
 .space {
     margin-top: 25%;
 }
