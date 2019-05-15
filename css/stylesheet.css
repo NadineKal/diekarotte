@@ -2,6 +2,10 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+th {
+    font-weight: normal;
+}
+
 a:hover {
     text-decoration: none;
 }
