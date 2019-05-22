@@ -4,12 +4,12 @@
         <title>Registrierung</title>
     </head>
     <body>
-        <form action = "registrieren" method = "POST">
-                <input type = "text" name = "nachname" placeholder = "Nachname"> <br>
-                <input type = "text" name = "vorname" placeholder = "Vorname"> <br>
+        <p><br><%= message%></p>
+        <form action = "/registrieren" method = "POST">
+                <input type = "text" name = "name" placeholder = "Vor- und Nachname"> <br>
                 <input type = "text" name = "passwort" placeholder = "Passwort"> <br>
                 <input type = "text" name = "passwortwdh" placeholder = "Passwort wiederholen"> <br>
-                <button type = "submit">registrieren</button>
+                <button type = "submit">Registrieren</button>
         </form>
     </body>
 </html>

@@ -105,11 +105,9 @@ app.get("/", function(req, res){
     res.render('index');
 });
 
-
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:true}));
 
-// Funktioniert so noch nicht, weil alle db-Funktionen keinen String sondern etwas Anderes ausgeben
 app.post("/eingabe", function(req, res){
     const name = req.body.name;
     const passwort = req.body.passwort;
@@ -186,6 +184,28 @@ app.post("/gerichte", function(req, res){
         db.run(sql1); db.run(sql2); db.run(sql3);
     }
     res.render('plaene');
+});
+
+app.post("/registrieren", function(req, res){
+    const name = req.body.name;
+    const passwort = req.body.passwort;
+    const passwortwdh = req.body.passwortwdh;
+    if(passwort != passwortwdh){
+        res.render('registrierung', {message: "Passwörter stimmen nicht überein!"});
+    }
+    db.get(`select name from studis where name = '${name}'`, (err,row)=>{
+        if(row != null){
+            res.render('registrierung', {message: "Name bereits registriert!"})
+        } else{
+            const sql = `insert into studis (name, passwort) values('${name}','${passwort}')`
+            db.run(sql);
+        }
+    });
+    res.render('login', {message: "Sie haben sich erfolgreich registriert!"})
+});
+
+app.get("/registrierung", function(req, res){
+    res.render('registrierung', {message: "Hier als Student mit Namen und Passwort registrieren:"})
 });
 
 app.get("/plaene", function(req, res){
