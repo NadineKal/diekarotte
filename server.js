@@ -111,15 +111,17 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.post("/eingabe", function(req, res){
     const name = req.body.name;
     const passwort = req.body.passwort;
-    console.log(name);
     db.get(`SELECT * FROM mitarbeiter WHERE name = '${name}'`,(err,row)=>{
         if(row == null){
             res.render('login', {message: "Name unbekannt!"});
+            return;  
         }
         if(row.passwort == passwort){
             res.render('administration');
+            return;
         } else {
             res.render('login', {message: "Name und Passwort stimmen nicht überein!"});
+            return;
         }
     });
 });
@@ -135,7 +137,8 @@ app.post("/vorschlagSenden", function(req, res){
         const sql1 = `insert into ranking (gid) values (${gid})`;
         db.run(sql1);
     });
-    res.render('vorschlag');
+    res.render('ranking');
+    return;
 });
 
 app.post("/gerichte", function(req, res){
@@ -192,16 +195,37 @@ app.post("/registrieren", function(req, res){
     const passwortwdh = req.body.passwortwdh;
     if(passwort != passwortwdh){
         res.render('registrierung', {message: "Passwörter stimmen nicht überein!"});
+        return;
     }
     db.get(`select name from studis where name = '${name}'`, (err,row)=>{
         if(row != null){
             res.render('registrierung', {message: "Name bereits registriert!"})
+            return;
         } else{
             const sql = `insert into studis (name, passwort) values('${name}','${passwort}')`
             db.run(sql);
         }
     });
-    res.render('login', {message: "Sie haben sich erfolgreich registriert!"})
+    res.render('vorschlag');
+    return;
+});
+
+app.post("/studiLogin", function(req,res){
+    const name = req.body.name;
+    const passwort = req.body.passwort;
+    db.get(`SELECT * FROM studis WHERE name = '${name}'`,(err,rows)=>{
+        if(rows == null){
+            res.render('vorschlag-login', {message: "Name unbekannt!"});
+            return;
+        }
+        if(rows.passwort == passwort){
+            res.render('vorschlag');
+            return;
+        } else {
+            res.render('vorschlag-login', {message: "Name und Passwort stimmen nicht überein!"});
+            return;
+        }
+    });
 });
 
 app.get("/registrierung", function(req, res){
@@ -217,7 +241,7 @@ app.get("/ranking", function(req, res){
 });
 
 app.get("/vorschlage", function(req, res){
-    res.render('vorschlag');
+    res.render('vorschlag-login', {message: "Hier einloggen:"});
 });
 
 app.get("/login", function(req, res){
