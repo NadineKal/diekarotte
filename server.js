@@ -19,7 +19,7 @@ let sql = `SELECT * FROM vorschlaege`;
 db.all(sql, (error,rows) => {
     if (error){
         if (rows == null){
-            db.run(`CREATE TABLE vorschlaege (gid INTEGER AUTOINCREMENT, gericht TEXT NOT NULL, ranking INTEGER DEFAULT 0)`,(error)=>{
+            db.run(`CREATE TABLE vorschlaege (gid INTEGER PRIMARY KEY AUTOINCREMENT, gericht TEXT NOT NULL, ranking INTEGER DEFAULT 0)`,(error)=>{
                 if(error){
                     console.log(error.message);
                 } else {
@@ -130,6 +130,13 @@ app.post("/vorschlagSenden", function(req, res){
     const vorschlag = req.body.vorschlag;
     const sql = `insert into vorschlaege (gericht) values('${vorschlag}')`;
     db.run(sql);
+    
+    db.get(`select * from vorschlaege where gericht = '${vorschlag}'`,(err, row) =>{
+        const gid = row.gid;
+        console.log(gid);
+        const sql1 = `insert into ranking (gid) values (${gid})`;
+        db.run(sql1);
+    });
     res.render('vorschlag');
 });
 
