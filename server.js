@@ -19,7 +19,7 @@ let sql = `SELECT * FROM vorschlaege`;
 db.all(sql, (error,rows) => {
     if (error){
         if (rows == null){
-            db.run(`CREATE TABLE vorschlaege (gid INTEGER AUTOINCREMENT, gericht TEXT NOT NULL, ranking INTEGER DEFAULT 0)`,(error)=>{
+            db.run(`CREATE TABLE vorschlaege (gid INTEGER PRIMARY KEY AUTOINCREMENT, gericht TEXT NOT NULL, ranking INTEGER DEFAULT 0)`,(error)=>{
                 if(error){
                     console.log(error.message);
                 } else {
@@ -105,11 +105,9 @@ app.get("/", function(req, res){
     res.render('index');
 });
 
-
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:true}));
 
-// Funktioniert so noch nicht, weil alle db-Funktionen keinen String sondern etwas Anderes ausgeben
 app.post("/eingabe", function(req, res){
     const name = req.body.name;
     const passwort = req.body.passwort;
@@ -130,6 +128,13 @@ app.post("/vorschlagSenden", function(req, res){
     const vorschlag = req.body.vorschlag;
     const sql = `insert into vorschlaege (gericht) values('${vorschlag}')`;
     db.run(sql);
+    
+    db.get(`select * from vorschlaege where gericht = '${vorschlag}'`,(err, row) =>{
+        const gid = row.gid;
+        console.log(gid);
+        const sql1 = `insert into ranking (gid) values (${gid})`;
+        db.run(sql1);
+    });
     res.render('vorschlag');
 });
 
@@ -181,6 +186,28 @@ app.post("/gerichte", function(req, res){
     res.render('plaene');
 });
 
+app.post("/registrieren", function(req, res){
+    const name = req.body.name;
+    const passwort = req.body.passwort;
+    const passwortwdh = req.body.passwortwdh;
+    if(passwort != passwortwdh){
+        res.render('registrierung', {message: "Passwörter stimmen nicht überein!"});
+    }
+    db.get(`select name from studis where name = '${name}'`, (err,row)=>{
+        if(row != null){
+            res.render('registrierung', {message: "Name bereits registriert!"})
+        } else{
+            const sql = `insert into studis (name, passwort) values('${name}','${passwort}')`
+            db.run(sql);
+        }
+    });
+    res.render('login', {message: "Sie haben sich erfolgreich registriert!"})
+});
+
+app.get("/registrierung", function(req, res){
+    res.render('registrierung', {message: "Hier als Student mit Namen und Passwort registrieren:"})
+});
+
 app.get("/plaene", function(req, res){
     res.render('plaene');
 });
@@ -202,32 +229,32 @@ app.get("/administration", function(req, res){
 });
 
 app.get("/wochenuebersicht", function(req, res){
-    db.all(`SELECT tag,gericht,preis FROM gerichte`,(err,rows)=>{ 
+    db.all(`SELECT tag,gericht,preis,eigenschaft FROM gerichte`,(err,rows)=>{ 
         res.render('wochenuebersicht', {"all":rows});
     });
 });
 app.get("/montag", function(req, res){
-    db.all(`SELECT gericht,preis FROM gerichte where tag = "Montag"`, (err,rows)=>{
+    db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Montag"`, (err,rows)=>{
         res.render('montag', {"mon": rows});
     }); 
 });
 app.get("/dienstag", function(req, res){
-    db.all(`SELECT gericht,preis FROM gerichte where tag = "Dienstag"`, (err,rows)=>{
+    db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Dienstag"`, (err,rows)=>{
         res.render('dienstag', {"die": rows});
     });
 });
 app.get("/mittwoch", function(req, res){
-    db.all(`SELECT gericht,preis FROM gerichte where tag = "Mittwoch"`, (err,rows)=>{
+    db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Mittwoch"`, (err,rows)=>{
         res.render('mittwoch', {"mit": rows});
     });
 });
 app.get("/donnerstag", function(req, res){
-    db.all(`SELECT gericht,preis FROM gerichte where tag = "Donnerstag"`, (err,rows)=>{
+    db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Donnerstag"`, (err,rows)=>{
         res.render('donnerstag', {"don": rows});
     });
 });
 app.get("/freitag", function(req, res){
-    db.all(`SELECT gericht,preis FROM gerichte where tag = "Freitag"`, (err,rows)=>{
+    db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Freitag"`, (err,rows)=>{
         res.render('freitag', {"fre": rows});
     });
 });
