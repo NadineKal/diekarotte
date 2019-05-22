@@ -116,8 +116,12 @@ footer ul li a:hover, .nav-absolute ul li a:hover {
 
 .space {
     margin-top: 25%;
+    margin-bottom: 25%;
 }
 
+.rank {
+    overflow: scroll;
+}
 
 @media (min-width: 992px) { 
     .left-h {
