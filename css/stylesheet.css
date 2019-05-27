@@ -76,11 +76,11 @@ footer ul li, .nav-absolute ul li {
 }
 
 footer ul li a {
-    color: white;
+    color: orange;
 }
 
 footer ul li a:hover, .nav-absolute ul li a:hover {
-    color: orange;
+    color: white;
 }
 
 .brand-left {

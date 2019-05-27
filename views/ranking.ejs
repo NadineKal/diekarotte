@@ -34,6 +34,12 @@
                             <div class="space">
                                 <div class="rank">
                                     <ul>
+                                        <% for(var i=0;i<all.length;i++){%>
+                                            <li><%= all[i].gericht%> Upvotes: <%= all[i].ranking%>
+                                                <a class="brand-left" href="/upvote">
+                                                <img src="img/pfeiloben.jpg" width="50" height="50" alt="Vorschlag upvoten">
+                                                </a></li>
+                                        <% }%>
                                     </ul>
                              </div>
                                    

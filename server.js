@@ -133,11 +133,12 @@ app.post("/vorschlagSenden", function(req, res){
     
     db.get(`select * from vorschlaege where gericht = '${vorschlag}'`,(err, row) =>{
         const gid = row.gid;
-        console.log(gid);
         const sql1 = `insert into ranking (gid) values (${gid})`;
         db.run(sql1);
     });
-    res.render('ranking');
+    db.all(`SELECT gericht,ranking FROM vorschlaege`,(err,rows)=>{ 
+        res.render('ranking', {"all": rows});
+    });
     return;
 });
 
@@ -237,7 +238,10 @@ app.get("/plaene", function(req, res){
 });
 
 app.get("/ranking", function(req, res){
-    res.render('ranking');
+    db.all(`SELECT gericht,ranking FROM vorschlaege`,(err,rows)=>{ 
+        res.render('ranking', {"all": rows});
+    });
+    
 });
 
 app.get("/vorschlage", function(req, res){
@@ -287,4 +291,13 @@ app.get("/impressum", function(req, res){
 });
 app.get("/datenschutz", function(req, res){
     res.render('datenschutz');
+});
+
+app.get("/upvote", function(req, res){
+    const gericht = req.body.gericht;
+    console.log(gericht);
+    const sql = `update vorschlaege ranking = ranking + 1 where gericht = ${gericht}`;
+    db.all(`SELECT gericht,ranking FROM vorschlaege`,(err,rows)=>{ 
+        res.render('ranking', {"all": rows});
+    });
 });
