@@ -109,7 +109,11 @@ app.listen(port, function() {
 app.use(express.static(__dirname + '/'));
 
 app.get("/", function(req, res){
-    res.render('index');
+    if (req.session.authenticated) { 
+        res.render('index', {"logout": 1});
+    } else{
+        res.render('index', {"logout": 0});
+    }
 });
 
 const bodyParser = require('body-parser');
@@ -138,13 +142,17 @@ app.post("/vorschlagSenden", function(req, res){
     const sql = `insert into vorschlaege (gericht) values('${vorschlag}')`;
     db.run(sql);
     
-    db.get(`select * from vorschlaege where gericht = '${vorschlag}'`,(err, row) =>{
-        const gid = row.gid;
-        const sql1 = `insert into ranking (gid) values (${gid})`;
-        db.run(sql1);
-    });
+    //db.all(`select * from vorschlaege where gericht = '${vorschlag}'`,(err, rows) =>{
+   //     const gid = rows.gid;
+   //     const sql1 = `insert into ranking (gid) values (${gid})`;
+    //    db.run(sql1);
+    //});
     db.all(`SELECT gericht,ranking FROM vorschlaege`,(err,rows)=>{ 
-        res.render('ranking', {"all": rows});
+        if(!req.session.authenticated) {
+            res.render('ranking', {"all": rows, "logout": null, "loggedin": 0});
+        } else{
+            res.render('ranking', {"all": rows, "logout": 1, "loggedin": 1});
+        }
     });
     return;
 });
@@ -194,7 +202,11 @@ app.post("/gerichte", function(req, res){
         db.run(del);
         db.run(sql1); db.run(sql2); db.run(sql3);
     }
-    res.render('plaene');
+    if (req.session.authenticated) { 
+        res.render('plaene', {"logout": 1});
+    } else{
+        res.render('plaene', {"logout": 0});
+    }
 });
 
 app.post("/registrieren", function(req, res){
@@ -216,7 +228,7 @@ app.post("/registrieren", function(req, res){
     });
     req.session.authenticated = true;
     req.session.username = name;
-    res.render('vorschlag');
+    res.render('vorschlag', {"loggedin": 1});
     return;
 });
 
@@ -231,7 +243,7 @@ app.post("/studiLogin", function(req,res){
         if(rows.passwort == passwort){
             req.session.authenticated = true;
             req.session.username = name;
-            res.render('vorschlag');
+            res.render('vorschlag', {"loggedin": 1, "logout": 1});
             return;
         } else {
             res.render('vorschlag-login', {message: "Name und Passwort stimmen nicht überein!"});
@@ -245,18 +257,22 @@ app.get("/registrierung", function(req, res){
 });
 
 app.get("/plaene", function(req, res){
-    res.render('plaene');
+    if(!req.session.authenticated) {
+        res.render('plaene', {"logout": null});
+    } else{
+        res.render('plaene', {"logout": 1});
+    }
 });
 
 app.get("/ranking", function(req, res){
     if(!req.session.authenticated) {
         db.all(`SELECT gericht,ranking FROM vorschlaege`,(err,rows)=>{ 
-            res.render('ranking', {"all": rows, "loggedin": 0});
+            res.render('ranking', {"all": rows, "loggedin": 0, "logout": null});
             return;
         });
     } else{
         db.all(`SELECT gericht,ranking FROM vorschlaege`,(err,rows)=>{ 
-            res.render('ranking', {"all": rows, "loggedin": 1});
+            res.render('ranking', {"all": rows, "loggedin": 1, "logout": 1});
             return;
         });
     }
@@ -264,10 +280,10 @@ app.get("/ranking", function(req, res){
 
 app.get("/vorschlage", function(req, res){
     if (!req.session.authenticated) {
-        res.render('vorschlag-login', {message: "Hier einloggen:"});
+        res.render('vorschlag-login', {message: "Hier einloggen:", "logout": null});
         return;
     }
-    res.render('vorschlag');
+    res.render('vorschlag', {"logout": 1});
 });
 
 app.get("/login", function(req, res){
@@ -279,34 +295,70 @@ app.get("/administration", function(req, res){
 });
 
 app.get("/wochenuebersicht", function(req, res){
-    db.all(`SELECT tag,gericht,preis,eigenschaft FROM gerichte`,(err,rows)=>{ 
-        res.render('wochenuebersicht', {"all":rows});
-    });
+    if (req.session.authenticated) { 
+        db.all(`SELECT tag,gericht,preis,eigenschaft FROM gerichte`,(err,rows)=>{ 
+            res.render('wochenuebersicht', {"all":rows, "logout": 1});
+        });
+    } else{
+        db.all(`SELECT tag,gericht,preis,eigenschaft FROM gerichte`,(err,rows)=>{ 
+            res.render('wochenuebersicht', {"all":rows, "logout": 0});
+        });
+    }
 });
 app.get("/montag", function(req, res){
-    db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Montag"`, (err,rows)=>{
-        res.render('montag', {"mon": rows});
-    }); 
+    if (req.session.authenticated) { 
+        db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Montag"`, (err,rows)=>{
+            res.render('montag', {"mon": rows, "logout": 1});
+        }); 
+    } else{
+        db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Montag"`, (err,rows)=>{
+            res.render('montag', {"mon": rows, "logout": 0});
+        }); 
+    }
 });
 app.get("/dienstag", function(req, res){
-    db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Dienstag"`, (err,rows)=>{
-        res.render('dienstag', {"die": rows});
-    });
+    if (req.session.authenticated) { 
+        db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Dienstag"`, (err,rows)=>{
+            res.render('dienstag', {"die": rows, "logout": 1});
+        });
+    } else{
+        db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Dienstag"`, (err,rows)=>{
+            res.render('Dienstag', {"die": rows, "logout": null});
+        });
+    }
 });
 app.get("/mittwoch", function(req, res){
-    db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Mittwoch"`, (err,rows)=>{
-        res.render('mittwoch', {"mit": rows});
-    });
+    if (req.session.authenticated) { 
+        db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Mittwoch"`, (err,rows)=>{
+            res.render('mittwoch', {"mit": rows, "logout": 1});
+        });
+    } else{
+        db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Mittwoch"`, (err,rows)=>{
+            res.render('mittwoch', {"mit": rows, "logout": null});
+        });
+    }
 });
 app.get("/donnerstag", function(req, res){
-    db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Donnerstag"`, (err,rows)=>{
-        res.render('donnerstag', {"don": rows});
-    });
+    if (req.session.authenticated) { 
+        db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Donnerstag"`, (err,rows)=>{
+            res.render('donnerstag', {"don": rows, "logout": 1});
+        });
+    } else{
+        db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Donnerstag"`, (err,rows)=>{
+            res.render('donnerstag', {"don": rows, "logout": null});
+        });
+    }
 });
 app.get("/freitag", function(req, res){
-    db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Freitag"`, (err,rows)=>{
-        res.render('freitag', {"fre": rows});
-    });
+    if (req.session.authenticated) { 
+        db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Freitag"`, (err,rows)=>{
+        res.render('freitag', {"fre": rows, "logout": 1});
+        });
+    } else{
+        db.all(`SELECT gericht,preis,eigenschaft FROM gerichte where tag = "Freitag"`, (err,rows)=>{
+            res.render('freitag', {"fre": rows, "logout": null});
+        });
+    }
 });
 app.get("/impressum", function(req, res){
     res.render('impressum');
@@ -320,11 +372,16 @@ app.get("/upvote", function(req, res){
     const sql = `update vorschlaege ranking = ranking + 1 where gericht = ${gericht}`;
     if (!req.session.authenticated) { 
         db.all(`SELECT gericht,ranking FROM vorschlaege`,(err,rows)=>{ 
-            res.render('ranking', {"all": rows, "loggedin": 2});
+            res.render('ranking', {"all": rows, "loggedin": 2, "logout": null});
         });
     } else {
         db.all(`SELECT gericht,ranking FROM vorschlaege`,(err,rows)=>{ 
-            res.render('ranking', {"all": rows, "loggedin": 1});
+            res.render('ranking', {"all": rows, "loggedin": 1, "logout": 1});
         });
     }
+});
+
+app.get("/logout", function(req, res){
+    req.session.destroy();
+    res.render('index', {"logout": null})
 });
