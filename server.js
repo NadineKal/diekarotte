@@ -214,6 +214,8 @@ app.post("/registrieren", function(req, res){
             db.run(sql);
         }
     });
+    req.session.authenticated = true;
+    req.session.username = name;
     res.render('vorschlag');
     return;
 });
@@ -227,6 +229,8 @@ app.post("/studiLogin", function(req,res){
             return;
         }
         if(rows.passwort == passwort){
+            req.session.authenticated = true;
+            req.session.username = name;
             res.render('vorschlag');
             return;
         } else {
@@ -245,14 +249,25 @@ app.get("/plaene", function(req, res){
 });
 
 app.get("/ranking", function(req, res){
-    db.all(`SELECT gericht,ranking FROM vorschlaege`,(err,rows)=>{ 
-        res.render('ranking', {"all": rows});
-    });
-    
+    if(!req.session.authenticated) {
+        db.all(`SELECT gericht,ranking FROM vorschlaege`,(err,rows)=>{ 
+            res.render('ranking', {"all": rows, "loggedin": 0});
+            return;
+        });
+    } else{
+        db.all(`SELECT gericht,ranking FROM vorschlaege`,(err,rows)=>{ 
+            res.render('ranking', {"all": rows, "loggedin": 1});
+            return;
+        });
+    }
 });
 
 app.get("/vorschlage", function(req, res){
-    res.render('vorschlag-login', {message: "Hier einloggen:"});
+    if (!req.session.authenticated) {
+        res.render('vorschlag-login', {message: "Hier einloggen:"});
+        return;
+    }
+    res.render('vorschlag');
 });
 
 app.get("/login", function(req, res){
@@ -302,9 +317,14 @@ app.get("/datenschutz", function(req, res){
 
 app.get("/upvote", function(req, res){
     const gericht = req.body.gericht;
-    console.log(gericht);
     const sql = `update vorschlaege ranking = ranking + 1 where gericht = ${gericht}`;
-    db.all(`SELECT gericht,ranking FROM vorschlaege`,(err,rows)=>{ 
-        res.render('ranking', {"all": rows});
-    });
+    if (!req.session.authenticated) { 
+        db.all(`SELECT gericht,ranking FROM vorschlaege`,(err,rows)=>{ 
+            res.render('ranking', {"all": rows, "loggedin": 2});
+        });
+    } else {
+        db.all(`SELECT gericht,ranking FROM vorschlaege`,(err,rows)=>{ 
+            res.render('ranking', {"all": rows, "loggedin": 1});
+        });
+    }
 });

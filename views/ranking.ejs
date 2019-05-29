@@ -50,7 +50,15 @@
                                         <% }%>
                                     </ul>
                              </div>
-                                   
+                            <% if (loggedin==0){%>
+                            <br><a href="/vorschlage" class="btn btn-primary float-right" title="zumEinloggen">zum Einloggen</a>     
+                            <% }%>
+                            <% if (loggedin==1){%>
+                                <br><a href="/vorschlage" class="btn btn-primary float-right" title="vorschlagMachen">Vorschlag machen</a>     
+                            <% }%>
+                            <% if (loggedin==2){%>
+                                <br>Du musst dich einloggen um Vorschläge zu bewerten:<a href="/vorschlage" class="btn btn-primary float-right" title="zumEinloggen">zum Einloggen</a> 
+                            <% }%> 
                             </div>
                         </div>
                     </div>
