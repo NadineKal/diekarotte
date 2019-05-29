@@ -6,9 +6,6 @@ if(!fs.existsSync('./db')){
     fs.mkdirSync('./db')
 }
 
-const bcrypt = require('bcrypt');
-const saltRounds = 8;
-
 const session = require('express-session');
 app.use(session({
     secret: 'example',
