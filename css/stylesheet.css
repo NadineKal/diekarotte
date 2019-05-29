@@ -2,6 +2,10 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+.start {
+    background: #FFF5BA;
+}
+
 th {
     font-weight: normal;
 }
@@ -91,7 +95,7 @@ footer ul li, .nav-absolute ul li {
 }
 
 footer ul li a {
-    color: orange;
+    color: black;
 }
 
 footer ul li a:hover, .nav-absolute ul li a:hover {
@@ -159,4 +163,9 @@ footer ul li a:hover, .nav-absolute ul li a:hover {
  .list-group a:hover {
      background: orange;
      color: white;
+ }
+
+ .right {
+     position: absolute;
+     right: 0;
  }
