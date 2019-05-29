@@ -142,8 +142,8 @@ app.post("/vorschlagSenden", function(req, res){
     const sql = `insert into vorschlaege (gericht) values('${vorschlag}')`;
     db.run(sql);
     
-    //db.all(`select * from vorschlaege where gericht = '${vorschlag}'`,(err, rows) =>{
-   //     const gid = rows.gid;
+    //db.get(`select * from vorschlaege where gericht = '${vorschlag}'`,(err, row) =>{
+   //     const gid = row.gid;
    //     const sql1 = `insert into ranking (gid) values (${gid})`;
     //    db.run(sql1);
     //});
