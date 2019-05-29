@@ -6,6 +6,16 @@ if(!fs.existsSync('./db')){
     fs.mkdirSync('./db')
 }
 
+const bcrypt = require('bcrypt');
+const saltRounds = 8;
+
+const session = require('express-session');
+app.use(session({
+    secret: 'example',
+    resave: false,
+    saveUninitialized: true
+}));
+
 const sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database('db/shop.db', (error) => {
     if(error){
