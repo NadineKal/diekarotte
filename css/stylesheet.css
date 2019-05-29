@@ -14,26 +14,41 @@ a:hover {
     margin-top: 150px;
 }
 
+.card {
+    border-radius: 20px;
+    text-align: center;
+}
+
+
 .cards-link:hover {
     background: #e46713;
     transition: 0.9s;
 }
 .card-plan {
-    border: none;
-    border-radius: 0;
     background: #e47323;
 }
 
+.card-plan:hover {
+    background: orangered;
+    transition: 0.3s;
+}
+
 .card-rank {
-    border: none;
-    border-radius: 0;
     background: #9d9737;
 }
 
+.card-rank:hover {
+    background-color: green;
+    transition: 0.3s;
+}
+
 .card-sugg {
-    border: none;
-    border-radius: 0;
     background: #f5ab38;
+}
+
+.card-sugg:hover {
+    background: red; 
+    transition: 0.3s;
 }
 
 .card-txt {
@@ -55,8 +70,8 @@ a:hover {
 
 footer {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 10px;
+    left: 10px;
 }
 
 footer ul, .nav-absolute ul {
@@ -100,8 +115,6 @@ footer ul li a:hover, .nav-absolute ul li a:hover {
     right: 10px;
     z-index: 100;
 }
-
-
 
 /* Pläne */
 

@@ -29,7 +29,17 @@
   content: "\e900";
   color: #f9b20c;
 }
+
+.icon-login:hover::before {
+  color: orange;
+}
+
 .icon-carrot:before {
   content: "\e904";
   color: #f3ba10;
 }
+
+.icon-carrot:hover::before {
+  color: orange;
+}
+
