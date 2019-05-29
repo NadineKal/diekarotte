@@ -95,7 +95,7 @@ footer ul li a {
 }
 
 footer ul li a:hover, .nav-absolute ul li a:hover {
-    color: white;
+    color: orangered;
 }
 
 .brand-left {
