@@ -22,6 +22,9 @@ let db = new sqlite3.Database('db/shop.db', (error) => {
     }
 });
 
+const bcrypt = require('bcrypt');
+const saltRounds = 8;
+
 let sql = `SELECT * FROM vorschlaege`;
 db.all(sql, (error,rows) => {
     if (error){
@@ -142,11 +145,11 @@ app.post("/vorschlagSenden", function(req, res){
     const sql = `insert into vorschlaege (gericht) values('${vorschlag}')`;
     db.run(sql);
     
-    //db.get(`select * from vorschlaege where gericht = '${vorschlag}'`,(err, row) =>{
-   //     const gid = row.gid;
-   //     const sql1 = `insert into ranking (gid) values (${gid})`;
-    //    db.run(sql1);
-    //});
+    db.get(`select * from vorschlaege where gericht = '${vorschlag}'`,(err, row) =>{
+        const gid = row.gid;
+        const sql1 = `insert into ranking (gid) values (${gid})`;
+        db.run(sql1);
+    });
     db.all(`SELECT gericht,ranking FROM vorschlaege`,(err,rows)=>{ 
         if(!req.session.authenticated) {
             res.render('ranking', {"all": rows, "logout": null, "loggedin": 0});
@@ -222,31 +225,42 @@ app.post("/registrieren", function(req, res){
             res.render('registrierung', {message: "Name bereits registriert!"})
             return;
         } else{
-            const sql = `insert into studis (name, passwort) values('${name}','${passwort}')`
-            db.run(sql);
+            bcrypt.hash(passwort, saltRounds, (error, hash) => {
+                if (error) {
+                    console.log(error);
+                    response.redirect('/registrieren');
+                    return;
+                }
+                const sql = `insert into studis (name, passwort) values('${name}','${hash}')`
+                db.run(sql);
+            });
         }
     });
     req.session.authenticated = true;
     req.session.username = name;
-    res.render('vorschlag', {"loggedin": 1});
+    res.render('vorschlag', {"loggedin": 1, "logout": 1});
     return;
 });
 
 app.post("/studiLogin", function(req,res){
     const name = req.body.name;
     const passwort = req.body.passwort;
-    db.get(`SELECT * FROM studis WHERE name = '${name}'`,(err,rows)=>{
-        if(rows == null){
-            res.render('vorschlag-login', {message: "Name unbekannt!"});
-            return;
-        }
-        if(rows.passwort == passwort){
-            req.session.authenticated = true;
-            req.session.username = name;
-            res.render('vorschlag', {"loggedin": 1, "logout": 1});
-            return;
+    db.get(`SELECT * FROM studis WHERE name = '${name}'`, function(err, row) {
+        if(row != null){
+            bcrypt.compare(passwort, row.passwort, (error, result) => {
+                console.log(passwort, row.passwort);
+                if (result == true){
+                    req.session.authenticated = true;
+                    req.session.username = name;
+                    res.render('vorschlag', {"loggedin": 1, "logout": 1});
+                    return; 
+                } else {
+                    res.render('vorschlag-login', {message: "Name und Passwort stimmen nicht überein!"});
+                    return;
+                }     
+            });
         } else {
-            res.render('vorschlag-login', {message: "Name und Passwort stimmen nicht überein!"});
+            res.render('vorschlag-login', {message: "Name unbekannt!"});
             return;
         }
     });
