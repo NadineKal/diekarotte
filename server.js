@@ -248,7 +248,6 @@ app.post("/studiLogin", function(req,res){
     db.get(`SELECT * FROM studis WHERE name = '${name}'`, function(err, row) {
         if(row != null){
             bcrypt.compare(passwort, row.passwort, (error, result) => {
-                console.log(passwort, row.passwort);
                 if (result == true){
                     req.session.authenticated = true;
                     req.session.username = name;
