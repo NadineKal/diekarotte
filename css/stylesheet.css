@@ -3,7 +3,11 @@ body {
 }
 
 .start {
-    background: #FFF5BA;
+    background: lightyellow;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: black;
 }
 
 th {
@@ -11,64 +15,6 @@ th {
 }
 
 a:hover {
-    text-decoration: none;
-}
-
-.cards {
-    margin-top: 150px;
-}
-
-.card {
-    border-radius: 20px;
-    text-align: center;
-}
-
-
-.cards-link:hover {
-    background: #e46713;
-    transition: 0.9s;
-}
-.card-plan {
-    background: #e47323;
-}
-
-.card-plan:hover {
-    background: orangered;
-    transition: 0.3s;
-}
-
-.card-rank {
-    background: #9d9737;
-}
-
-.card-rank:hover {
-    background-color: green;
-    transition: 0.3s;
-}
-
-.card-sugg {
-    background: #f5ab38;
-}
-
-.card-sugg:hover {
-    background: red; 
-    transition: 0.3s;
-}
-
-.card-txt {
-    text-align: center;
-    padding: 100px 0;
-    color: white;
-    font-size: 24px;
-    text-transform: uppercase;
-}
-
-.card-txt a {
-    color: white;
-}
-
-.card-txt a:hover {
-    color: white;
     text-decoration: none;
 }
 
@@ -90,27 +36,12 @@ footer ul li, .nav-absolute ul li {
     margin-right: 15px;
 }
 
-.nav-absolute ul li a {
-    color: black;
-}
-
 footer ul li a {
     color: black;
 }
 
 footer ul li a:hover, .nav-absolute ul li a:hover {
-    color: orangered;
-}
-
-.brand-left {
-    padding-right: 20px;
-}
-
-.nav-absolute {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 100;
+    color: rgba(0,0,0,.7);
 }
 
 .login-right {
@@ -140,6 +71,24 @@ footer ul li a:hover, .nav-absolute ul li a:hover {
     overflow: scroll;
 }
 
+.card-link .plan:hover {
+    background-color: #f29c0c;
+    border: #f29c0c;
+    transition: 0.3s;
+}
+
+.card-link .sugg:hover {
+    background-color: #729922;
+    border: #729922;
+    transition: 0.3s;
+}
+
+.card-link .rank:hover {
+    background-color: #cc4e0e;
+    border: #cc4e0e;
+    transition: 0.3s;
+}
+
 @media (min-width: 992px) { 
     .left-h {
         height: 100vh;
@@ -165,7 +114,111 @@ footer ul li a:hover, .nav-absolute ul li a:hover {
      color: white;
  }
 
- .right {
+
+
+ .navbar {
      position: absolute;
-     right: 0;
+     z-index: 100;
+     top: 0;
  }
+
+ main {
+     min-height: 100vh;
+     display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+
+ .card {
+     width: 300px;
+     height: 250px;
+     
+ }
+
+ .card-body {
+    margin-top: 85px;
+    color: white;
+ }
+
+ .card-body {
+     font-size: 24px;
+     text-transform: uppercase;
+ }
+
+ .plan {
+    background-color: #f6ae00;
+    border-color: #f6ae00;
+    -webkit-box-shadow: 9px 8px 7px -8px rgba(0,0,0,0.51);
+    -moz-box-shadow: 9px 8px 7px -8px rgba(0,0,0,0.51);
+    box-shadow: 9px 8px 7px -8px rgba(0,0,0,0.51);
+ }
+
+ .sugg {
+    background-color: #84b100;
+    border-color: #84b100;
+    -webkit-box-shadow: 9px 8px 7px -8px rgba(0,0,0,0.51);
+    -moz-box-shadow: 9px 8px 7px -8px rgba(0,0,0,0.51);
+    box-shadow: 9px 8px 7px -8px rgba(0,0,0,0.51);
+ }
+
+ .rank {
+    background-color: #e15400;
+    border-color: #e15400; 
+    -webkit-box-shadow: 9px 8px 7px -8px rgba(0,0,0,0.51);
+    -moz-box-shadow: 9px 8px 7px -8px rgba(0,0,0,0.51);
+    box-shadow: 9px 8px 7px -8px rgba(0,0,0,0.51);
+ }
+
+ .box-table {
+     overflow: scroll;
+     height: 60vh;
+ }
+
+ .btn-primary {
+     background-color: #84b100;
+     border: #84b100;
+ }
+
+ .btn-primary:hover {
+     background-color: #729922
+ }
+
+ a {
+     color: #84b100;
+ }
+
+ a:hover {
+     color: #729922;
+ }
+
+
+
+ /*RANK*/
+
+ .right {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+}
+
+.ranking ul {
+    list-style-type: none;
+}
+
+.ranking ul li {
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: 28px;
+}
+
+.icon-carrot:hover::before {
+    color: #f29c0c;
+    transition: 0.3s;
+}
+
+.icon-login:hover::before {
+    color: #f29c0c;
+    transition: 0.3s;
+}
