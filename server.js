@@ -127,14 +127,14 @@ app.post("/eingabe", function(req, res){
     const passwort = req.body.passwort;
     db.get(`SELECT * FROM mitarbeiter WHERE name = '${name}'`,(err,row)=>{
         if(row == null){
-            res.render('login', {message: "Name unbekannt!"});
+            res.render('login', {message: "Name unbekannt!", "logout": null});
             return;  
         }
         if(row.passwort == passwort){
             res.render('administration');
             return;
         } else {
-            res.render('login', {message: "Name und Passwort stimmen nicht überein!"});
+            res.render('login', {message: "Name und Passwort stimmen nicht überein!", "logout": null});
             return;
         }
     });
@@ -300,7 +300,11 @@ app.get("/vorschlage", function(req, res){
 });
 
 app.get("/login", function(req, res){
-    res.render('login', {message: "Melden Sie sich hier mit ihrem Namen und Ihrem Passwort an!"});
+    if(!req.session.authenticated) {
+        res.render('login', {message: "Melden Sie sich hier mit ihrem Namen und Ihrem Passwort an!", "logout": null});
+    } else{
+        res.render('login', {message: "Melden Sie sich hier mit ihrem Namen und Ihrem Passwort an!", "logout": 1});
+    }
 });
 
 app.get("/administration", function(req, res){
