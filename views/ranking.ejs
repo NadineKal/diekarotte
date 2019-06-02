@@ -13,17 +13,26 @@
     </head>
     <body>
         <header>
-            <div class="nav-absolute">
-                <a class="brand-left" href="/">
-                    <span class="icon-carrot"></span>
-                </a>
-                <ul>
-                    <li><a href="/plaene">Pläne</a></li>
-                    <li><a href="/vorschlage">Vorschlag</a></li>
-                    <li><a href="/ranking">Ranking</a></li>
-                    <% if (logout==1){%><li><a href="/logout">Logout</a></li><% }%>
-                </ul>
-            </div>
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="/"><span class="icon-carrot"></span></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/plaene">Pläne</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/vorschlage">Vorschläge</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ranking">Ranking</a>
+                        </li>
+                        <% if (logout==1){%><li><a href="/logout">Logout</a></li><% }%>
+                    </ul>
+                </div>
+            </nav>
             <div class="login-right">
                 <a href="/login">
                     <span class="icon-login">
@@ -41,7 +50,7 @@
                     <div class="col-lg-6 left-h">
                         <div class="col-lg-10 mx-auto">
                             <div class="space">
-                                <div class="rank">
+                                <div class="ranking">
                                     <ul>
                                         <% for(var i=0;i<all.length;i++){%>
                                             <li><%= all[i].gericht%> 
@@ -69,7 +78,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 right-h p-0">
-                        <div class="right-side"></div>
+                        <div class="right-side-ranking"></div>
                     </div>
                 </div>
             </div>
@@ -86,5 +95,6 @@
         <script src="js/jquery-3.3.1.min.js"></script>
         <script src="js/popper.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/main.js"></script>
     </body>
 </html>
