@@ -395,45 +395,42 @@ app.get("/upvote:gid", function(req, res){
             return;
         });
     } else {
-        const name = req.session.username;
-        db.get(`select * from studis where name = '${name}'`,(err, row) =>{
-        const uid = row.uid;
-        const sql1 = `insert into ranking (uid, gid) values (${uid}, ${gid})`
-    
-        db.all(`select uid from ranking where gid = ${gid}`, function(err,rows){
+        const name = req.session.username; let ja = 0; let uid = 100000000000; let sql1 = `test`;
+        console.log(name);
+        db.get(`select * from studis where name = '${name}'`,(err, row) =>{ if(err){throw (err);}
+            console.log(row);
+            uid = row.uid;
+            sql1 = `insert into ranking (uid, gid) values (${uid}, ${gid})` 
+        });
+        console.log(uid);
+        db.all(`select uid from ranking where gid = ${gid}`, function(err,rows){if(err){throw (err)}
             console.log(rows);
             for(var id = 0;id<rows.length;id++){
                 console.log(uid, rows[id].uid);
                 if(rows[id].uid == uid){
-                    console.log(1)
-                    if (!req.session.authenticated) {
-                        db.all(`SELECT gericht,ranking,gid FROM vorschlaege`,(err,rows)=>{ 
-                            res.render('ranking1', {"all": rows, "loggedin": 2, "logout": null});
-                            return;
-                        });
-                    } else {
-                        console.log(2)
-                        db.all(`SELECT gericht,ranking,gid FROM vorschlaege`,(err,rows)=> { 
-                            res.render('ranking', {"all": rows, "loggedin": 3, "logout": 1});
-                            return;
-                        });  
-                    }
+                    ja = 1;   
+                    console.log(1);
+                    break;    
                 }
             }
         });
-        if (!req.session.authenticated) { 
-            db.all(`SELECT gericht,ranking,gid FROM vorschlaege`,(err,rows)=>{ 
-                res.render('ranking', {"all": rows, "loggedin": 2, "logout": null});
+        console.log("ja");
+        if (ja == 1){
+            console.log(2)
+            db.all(`SELECT gericht,ranking,gid FROM vorschlaege`,(err,rowz)=> {
+                console.log(3);
+                res.render('ranking', {"all": rowz, "loggedin": 3, "logout": 1});
                 return;
             });
-        } else { 
+        }
+        if (ja == 0){
+            console.log(4)
             db.run(sql); db.run(sql1);
             db.all(`SELECT gericht,ranking,gid FROM vorschlaege`,(err,rows)=>{ 
                 res.render('ranking', {"all": rows, "loggedin": 1, "logout": 1});
                 return;
-            });
-        }     
-        });
+            }); 
+        }            
     }  
 });
 
