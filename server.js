@@ -405,16 +405,18 @@ app.get("/upvote:gid", function(req, res){
             for(var id = 0;id<rows.length;id++){
                 console.log(uid, rows[id].uid);
                 if(rows[id].uid == uid){
+                    console.log(1)
                     if (!req.session.authenticated) {
                         db.all(`SELECT gericht,ranking,gid FROM vorschlaege`,(err,rows)=>{ 
-                            res.render('ranking', {"all": rows, "loggedin": 2, "logout": null});
+                            res.render('ranking1', {"all": rows, "loggedin": 2, "logout": null});
                             return;
                         });
                     } else {
+                        console.log(2)
                         db.all(`SELECT gericht,ranking,gid FROM vorschlaege`,(err,rows)=>{ 
-                            res.render('ranking', {"all": rows, "loggedin": 3, "logout": 1});
-                            return;
+                            res.render('ranking', {"all": rows, "loggedin": 3, "logout": 1});  
                         });
+                        return;
                     }
                 }
             }
