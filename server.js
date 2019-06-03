@@ -413,10 +413,10 @@ app.get("/upvote:gid", function(req, res){
                         });
                     } else {
                         console.log(2)
-                        db.all(`SELECT gericht,ranking,gid FROM vorschlaege`,(err,rows)=>{ 
-                            res.render('ranking', {"all": rows, "loggedin": 3, "logout": 1});  
-                        });
-                        return;
+                        db.all(`SELECT gericht,ranking,gid FROM vorschlaege`,(err,rows)=> { 
+                            res.render('ranking', {"all": rows, "loggedin": 3, "logout": 1});
+                            return;
+                        });  
                     }
                 }
             }
