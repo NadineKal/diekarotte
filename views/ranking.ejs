@@ -57,7 +57,7 @@
                                                 <p class="right">
                                                     Upvotes: 
                                                     <%= all[i].ranking%>
-                                                    <a class="brand-left" href="/upvote" title="Vorschlag upvoten">
+                                                    <a class="brand-left" href="/upvote<%= all[i].gid%>" title="Vorschlag upvoten">
                                                     <span class="icon-circle-up">
                                                     </a>
                                                 </p>
@@ -73,7 +73,10 @@
                             <% }%>
                             <% if (loggedin==2){%>
                                 <br>Du musst dich einloggen um Vorschläge zu bewerten:<a href="/vorschlage" class="btn btn-primary float-right" title="zumEinloggen">zum Einloggen</a> 
-                            <% }%> 
+                            <% }%>
+                            <% if (loggedin==3){%>
+                                <br>Du kannst Vorschläge nicht doppelt bewerten.<a href="/vorschlage" class="btn btn-primary float-right" title="vorschlagMachen">Vorschlag machen</a> 
+                            <% }%>  
                             </div>
                         </div>
                     </div>
