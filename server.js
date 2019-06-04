@@ -417,7 +417,6 @@ app.get("/upvote:gid", function(req, res){
             });
             db.all(`select uid from ranking where gid = ${gid}`, function(err,rows){if(err){throw (err)}
                 for(var id = 0;id<rows.length;id++){
-                    console.log(uid, rows[id].uid);
                     if(rows[id].uid == uid){
                         ja = 1;   
                         break;    
