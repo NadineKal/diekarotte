@@ -125,19 +125,25 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.post("/eingabe", function(req, res){
     const name = req.body.name;
     const passwort = req.body.passwort;
-    db.get(`SELECT * FROM mitarbeiter WHERE name = '${name}'`,(err,row)=>{
-        if(row == null){
-            res.render('login', {message: "Name unbekannt!", "logout": null});
-            return;  
-        }
-        if(row.passwort == passwort){
-            res.render('administration');
-            return;
-        } else {
-            res.render('login', {message: "Name und Passwort stimmen nicht überein!", "logout": null});
-            return;
-        }
-    });
+    if (req.session.authenticated){
+        res.render('login', {message: "Du bist noch als Student angemeldet.", "logout": 1});
+    } else {
+        db.get(`SELECT * FROM mitarbeiter WHERE name = '${name}'`,(err,row)=>{
+            if(row == null){
+                res.render('login', {message: "Name unbekannt!", "logout": null});
+                return;  
+            }
+            if(row.passwort == passwort){
+                req.session.authenticated = true;
+                req.session.username = name;
+                res.render('administration');
+                return;
+            } else {
+                res.render('login', {message: "Name und Passwort stimmen nicht überein!", "logout": null});
+                return;
+            }
+        });
+    }
 });
 
 app.post("/vorschlagSenden", function(req, res){
@@ -302,7 +308,7 @@ app.get("/login", function(req, res){
     if(!req.session.authenticated) {
         res.render('login', {message: "Melden Sie sich hier mit ihrem Namen und Ihrem Passwort an!", "logout": null});
     } else{
-        res.render('login', {message: "Melden Sie sich hier mit ihrem Namen und Ihrem Passwort an!", "logout": 1});
+        res.render('administration');
     }
 });
 
