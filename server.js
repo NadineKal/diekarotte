@@ -377,10 +377,18 @@ app.get("/freitag", function(req, res){
     }
 });
 app.get("/impressum", function(req, res){
-    res.render('impressum');
+    if (req.session.authenticated) { 
+        res.render('impressum', {"logout": 1});
+    } else{
+        res.render('impressum', {"logout": null});
+    }
 });
 app.get("/datenschutz", function(req, res){
-    res.render('datenschutz');
+    if (req.session.authenticated) { 
+        res.render('datenschutz', {"logout": 1});
+    } else{
+        res.render('datenschutz', {"logout": null});
+    }
 });
 
 
@@ -402,7 +410,6 @@ app.get("/upvote:gid", function(req, res){
                 sql1 = `insert into ranking (uid, gid) values (${uid}, ${gid})` 
             });
             db.all(`select uid from ranking where gid = ${gid}`, function(err,rows){if(err){throw (err)}
-                console.log(rows);
                 for(var id = 0;id<rows.length;id++){
                     console.log(uid, rows[id].uid);
                     if(rows[id].uid == uid){
