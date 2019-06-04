@@ -377,7 +377,6 @@ app.get("/freitag", function(req, res){
     }
 });
 app.get("/impressum", function(req, res){
-    res.render('impressum');
     if (req.session.authenticated) { 
         res.render('impressum', {"logout": 1});
     } else{
@@ -385,7 +384,11 @@ app.get("/impressum", function(req, res){
     }
 });
 app.get("/datenschutz", function(req, res){
-    res.render('datenschutz');
+    if (req.session.authenticated) { 
+        res.render('datenschutz', {"logout": 1});
+    } else{
+        res.render('datenschutz', {"logout": null});
+    }
 });
 
 
