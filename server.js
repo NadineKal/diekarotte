@@ -149,7 +149,7 @@ app.post("/vorschlagSenden", function(req, res){
         const sql1 = `insert into ranking (gid) values (${gid})`;
         db.run(sql1);
     });
-    db.all(`SELECT gericht,ranking FROM vorschlaege`,(err,rows)=>{ 
+    db.all(`SELECT gericht,ranking,gid FROM vorschlaege`,(err,rows)=>{ 
         if(!req.session.authenticated) {
             res.render('ranking', {"all": rows, "logout": null, "loggedin": 0});
         } else{
